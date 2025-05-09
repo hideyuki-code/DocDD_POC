@@ -3,7 +3,79 @@ description:
 globs: 
 alwaysApply: true
 ---
-このプロジェクトは `https://github.com/hideyuki-code/DocDD_POC.git` リポジトリで管理します。
-プッシュは HTTPS を使用してください。
-コミットとプッシュは、ユーザーの指示があった場合にのみ行います。 
+## AIアシスタント向け プロジェクト概要と開発指針 (DocDD_POC)
 
+**1. プロジェクト全体像**
+
+*   **プロジェクト名**: DocDD_POC (フィットネススタジオ管理システム - 本日のレッスン一覧機能のPoC)
+*   **目的**:
+    *   AI駆動開発のデモンストレーション。
+    *   ドキュメント（特にマークダウン形式の設計書）をベースとしたAIとの協調作業プロセスの探求。
+    *   「本日のレッスン一覧」表示機能の実現。
+*   **リポジトリ**: `https://github.com/hideyuki-code/DocDD_POC.git`
+    *   プッシュはHTTPSを使用。
+    *   コミットとプッシュはユーザーの明確な指示があった場合のみ実施。
+*   **技術スタック (主要)**:
+    *   Next.js 15 (App Router, **`src` ディレクトリを使用する構成**)
+    *   TypeScript 5.0+
+    *   TailwindCSS
+    *   Jest + React Testing Library
+    *   データソース (初期フェーズ): 静的JSONファイル (`fitness-studio-admin/data/lessons.json` に配置)
+    *   パッケージマネージャー: `package.json` に準拠 (npmまたはyarn)
+
+**2. 主要ドキュメント**
+
+*   **開発タスクの聖典**: `fitness-studio-admin/docs/開発タスクチェックリスト_最終デモ版.md`
+    *   このチェックリストのタスクを上から順に実行することが基本方針。
+    *   各タスクの完了目安を意識する。
+*   **設計情報**:
+    *   基本設計: `fitness-studio-admin/docs/02_基本設計/` (UIイメージ等を含む)
+    *   詳細設計: `fitness-studio-admin/docs/03_詳細設計/`
+        *   各コンポーネント、型定義、サービス関数などの詳細な仕様が記載された `.md` ファイル群。
+        *   チェックリストの各項目からリンクされている設計書を必ず参照する。
+
+**3. ディレクトリ構造 (主要部分・想定)**
+
+'''text
+fitness-studio-admin/
+├── src/                     # ★アプリケーションコードの主要配置場所
+│   ├── app/
+│   │   ├── layout.tsx       # ルートレイアウト
+│   │   ├── page.tsx         # ルートページ (今回は主に触れない)
+│   │   └── schedule/
+│   │       └── today/
+│   │           ├── page.tsx     # 【本日のレッスン一覧ページ】
+│   │           ├── loading.tsx  # (上記pageに対応するローディングUI)
+│   │           └── error.tsx    # (上記pageに対応するエラーUI)
+│   ├── components/            # 共通コンポーネント
+│   │   └── common/
+│   │       └── StatusBadge.tsx # (例: ステータス表示バッジ)
+│   ├── lib/                   # ライブラリ、サービス関数
+│   │   └── lessonService.ts   # (例: レッスンデータ取得処理)
+│   └── types/                 # 型定義
+│       └── index.ts           # (例: Lesson, LessonStatus 型)
+├── data/                      # ★静的データ (srcの外、プロジェクトルート直下)
+│   └── lessons.json           # レッスン情報のJSONファイル
+├── docs/                      # ドキュメント類 (上述)
+├── public/                    # 静的アセット
+├── jest.config.js (または.ts) # Jest設定
+├── next.config.mjs (または.js) # Next.js設定
+├── package.json               # プロジェクト定義、依存関係
+├── tailwind.config.ts (または.js) # TailwindCSS設定
+└── tsconfig.json              # TypeScript設定 (パスエイリアス `@/*` 等もここで定義想定)
+'''
+
+*   **重要な注意点**:
+    *   **`src` ディレクトリ**: 型定義 (`types`)、ビジネスロジック (`lib`)、UIコンポーネント (`components`)、ページコンポーネント (`app`) は、原則として `src` ディレクトリ以下に配置する。
+    *   **インポートパス**: `src` ディレクトリ内のファイル間でモジュールをインポートする際は、`tsconfig.json` で設定されたパスエイリアス（例: `@/components/common/StatusBadge`）を使用するか、適切な相対パス（例: `../../types`）を使用する。
+    *   **`data` ディレクトリ**: `lessons.json` のような静的データファイルは、`fs` モジュールでサーバーサイドで読み込むことを想定し、プロジェクトルート直下の `data` ディレクトリに配置する。(`src` の外)
+
+**4. 開発・実装方針**
+
+*   **チェックリスト駆動**: `fitness-studio-admin/docs/開発タスクチェックリスト_最終デモ版.md` に記載されたタスクを順守する。
+*   **設計書参照**: 実装前には必ず対応する詳細設計ドキュメント (`.md`ファイル) を確認し、仕様を理解する。
+*   **ファイル作成場所**: 上記「ディレクトリ構造」で示した場所にファイルを作成・配置する。特に `src` ディレクトリの使用を徹底する。
+*   **Next.js App Router規約**: Server Components, Client Components の使い分け、`loading.tsx`, `error.tsx` の規約などを遵守する。
+*   **型安全性**: TypeScriptを活用し、型エラーが出ないように注意する。`any` 型の安易な使用は避ける。
+*   **テスト**: 機能実装後は、関連するユニットテストを作成・実行し、チェックリストの「完了の目安」を満たすことを目指す。（テスト実行環境のセットアップも含む）
+*   **コミュニケーション**: 不明な点、曖昧な点、判断に迷う点があれば、ユーザーに質問・確認する。
