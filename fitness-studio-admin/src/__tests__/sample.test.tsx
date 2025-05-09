@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 describe('サンプルテスト', () => {
   it('真であれば成功する', () => {
