@@ -1,0 +1,9 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+このプロジェクトは `https://github.com/hideyuki-code/DocDD_POC.git` リポジトリで管理します。
+プッシュは HTTPS を使用してください。
+コミットとプッシュは、ユーザーの指示があった場合にのみ行います。 
+
