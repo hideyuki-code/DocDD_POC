@@ -47,6 +47,33 @@ npx jest
 
 - テストを作成した場合は、必ず全てのテストがpassするまで検証してください。
 - テストが失敗している状態でのコミット・プッシュは禁止です。
+- package.json には必ず test スクリプトを含めること:
+  ```json
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest"
+  }
+  ```
+
+## Jest設定ルール
+
+- jest.config.mjs には必ず以下の設定を含めること:
+  - moduleNameMapper 設定でパスエイリアス（@/）の解決を行う
+  ```javascript
+  const config = {
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+    testEnvironment: 'jest-environment-jsdom',
+    moduleNameMapper: {
+      '^@/(.*)$': '<rootDir>/src/$1'
+    }
+  }
+  ```
+- モジュールのモック化を行う場合は、適切なモック方法を選択する:
+  - 外部モジュールのモック: jest.mock() を使用
+  - 内部関数のモック: テスト専用の内部関数（例: _internals）を使用して制御する
 
 ## 開発ディレクトリ運用ルール
 
@@ -54,7 +81,7 @@ npx jest
   - ファイル・ディレクトリ作成は必ず `docdd-poc/` 配下に行う
   - `docs/` ディレクトリは例外的に `docdd-poc` の外（リポジトリ直下）に存在する
 
-- **作業前に必ず現在のディレクトリを確認する**
+- **作業前と作業中に必ず現在のディレクトリを確認する**
   ```bash
   pwd  # 出力が /Users/kitakatahideyuki/Desktop/AI駆動/docdd-poc であることを確認
   ```
@@ -72,9 +99,27 @@ npx jest
     cd /Users/kitakatahideyuki/Desktop/AI駆動/docdd-poc && mkdir -p src/types
     ```
 
-- **操作後に結果を確認する**
+- **ディレクトリ作成時の追加安全策**
+  - 新しいディレクトリを作成する前に、既存のディレクトリ構造を確認する
   ```bash
+  ls -la /Users/kitakatahideyuki/Desktop/AI駆動/docdd-poc  # 既存構造を確認
+  ```
+  
+- **操作後の検証ステップを必ず実行**
+  ```bash
+  # 単純な確認
   ls -la /Users/kitakatahideyuki/Desktop/AI駆動/docdd-poc/src
+  
+  # より詳細な確認（特定のディレクトリが正しい場所に作成されたか確認）
+  find /Users/kitakatahideyuki/Desktop/AI駆動/docdd-poc -type d -name "components" | grep -v "node_modules"
+  ```
+
+- **パス変数の活用**
+  - 長いパスは変数に格納して再利用する
+  ```bash
+  # シェルスクリプトや作業セッションで
+  BASE_DIR="/Users/kitakatahideyuki/Desktop/AI駆動/docdd-poc"
+  mkdir -p "$BASE_DIR/src/components"
   ```
 
 - **必ずディレクトリ構造図に従う**
