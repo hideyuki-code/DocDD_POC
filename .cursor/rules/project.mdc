@@ -3,3 +3,107 @@ description:
 globs: 
 alwaysApply: false
 ---
+# プロジェクト構成・開発方針
+
+## プロジェクトの目的
+
+このプロジェクトは、AI駆動開発のデモンストレーションを行うことを目的としています。
+フィットネス/ヨガスタジオの管理者とインストラクター向けの管理システムにおける「本日のレッスン一覧」機能の実装を通じて、ドキュメントベースでのAIとの協調作業を探求します。
+
+## 技術スタック
+
+- フロントエンドフレームワーク: Next.js 14（App Router使用）
+- スタイリング: TailwindCSS
+- 言語: TypeScript 5.0以上
+- テストフレームワーク: Jest + React Testing Library
+- データソース（初期フェーズ）: 静的JSONファイル
+- パッケージマネージャー: npm または yarn
+- 開発環境推奨: VS Code + Cursor AI
+
+## 開発環境の立ち上げ
+
+```
+# 依存パッケージのインストール
+npm install
+
+# 開発サーバーの起動
+npm run dev
+# ブラウザで http://localhost:3000 を開く
+```
+
+## テストの実行方法
+
+```
+# テストの実行
+npm test
+# または
+npx jest
+```
+
+- テストは `src/**/__tests__/*.test.tsx` などに配置してください。
+- Jest + React Testing Library でユニットテストが実行されます。
+
+## テスト運用ルール
+
+- テストを作成した場合は、必ず全てのテストがpassするまで検証してください。
+- テストが失敗している状態でのコミット・プッシュは禁止です。
+
+
+
+## 環境情報
+
+- Next.js 14（App Router）
+- TypeScript 5.x
+- Tailwind CSS
+- Jest + React Testing Library
+
+## 実装の進め方
+
+- `docs/` 配下の設計ドキュメント（要件定義・基本設計・詳細設計）をもとに、アプリの各機能・コンポーネントを実装してください。
+- 実装タスクは `docs/開発タスクチェックリスト_最終デモ版.md` にまとめてあります。
+- チェックリストに沿って、一つずつ着実に実装・テスト・確認を進めてください。
+## ディレクトリ構造（例）
+
+```
+AI駆動/
+├── docdd-poc/                # アプリ本体（Next.js, TypeScript, Tailwind CSS）
+│   ├── src/                  # アプリのソースコード
+│   │   ├── app/              # Next.js App Router用ディレクトリ
+│   │   ├── components/       # UIコンポーネント
+│   │   ├── lib/              # ライブラリ・サービス層
+│   │   ├── types/            # 型定義
+│   │   └── ...               
+│   ├── public/               # 静的ファイル（画像・アイコン等）
+│   ├── node_modules/         # 依存パッケージ
+│   ├── .next/                # Next.jsビルド成果物
+│   ├── jest.config.mjs       # Jest設定ファイル
+│   ├── jest.setup.ts         # Jestセットアップファイル
+│   ├── tsconfig.json         # TypeScript設定
+│   ├── tailwind.config.ts    # Tailwind CSS設定
+│   ├── postcss.config.mjs    # PostCSS設定
+│   ├── next.config.mjs       # Next.js設定
+│   ├── package.json          # パッケージ管理
+│   ├── package-lock.json     # パッケージロック
+│   ├── .eslintrc.json        # ESLint設定
+│   ├── .gitignore            # Git管理除外ファイル
+│   └── ...                   # その他設定ファイル
+│
+├── docs/                     # ドキュメント（設計・要件・タスク管理等）
+│   ├── 01_要件定義/          # 要件定義ドキュメント
+│   │   └── 要件定義.md
+│   ├── 02_基本設計/          # 基本設計ドキュメント
+│   │   ├── 基本設計.md
+│   │   └── images/
+│   ├── 03_詳細設計/          # 詳細設計ドキュメント
+│   │   ├── 設計概要.md
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── lib/
+│   │   ├── tests/
+│   │   └── types/
+│   └── 開発タスクチェックリスト_最終デモ版.md # 実装タスク一覧
+│
+├── README.md                 # プロジェクト概要・セットアップ手順
+└── ...                       # その他（必要に応じて追加）
+```
+
