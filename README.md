@@ -7,7 +7,7 @@
 
 ## 技術スタック
 
-- フロントエンドフレームワーク: Next.js 15（App Router使用）
+- フロントエンドフレームワーク: Next.js 14（App Router使用）
 - スタイリング: TailwindCSS
 - 言語: TypeScript 5.0以上
 - テストフレームワーク: Jest + React Testing Library
