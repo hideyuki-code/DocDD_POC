@@ -40,7 +40,11 @@ npm test
 npx jest
 ```
 
-- テストコードは `src/tests` ディレクトリ内に、元のソースコードのディレクトリ構造を反映する形で配置してください。(例: `src/components/Button.tsx` のテストは `src/tests/components/Button.test.tsx` に配置)
+- テストコードは **`docdd-poc/src/tests` ディレクトリ内**に、元のソースコードのディレクトリ構造を反映する形で配置してください。
+- **Next.js App Router内のコンポーネントやページ (`src/app/...`) のテストファイルも、このルールに従い、対応するパス構造を `src/tests/` 以下に作成します。**
+- **コンポーネントやページファイルと同階層に `__tests__` ディレクトリを作成する方式は採用しません。**
+- 例1: `src/components/Button.tsx` のテストは `src/tests/components/Button.test.tsx` に配置します。
+- 例2: `src/app/schedule/today/page.tsx` のテストは `src/tests/app/schedule/today/page.test.tsx` に配置します。
 - Jest + React Testing Library でユニットテストが実行されます。
 
 ## テスト運用ルール
@@ -57,6 +61,21 @@ npx jest
     "test": "jest"
   }
   ```
+- **テストケースの記述言語**:
+  - Jestの `describe` ブロックや `it` ブロックのテストケース名は、日本語で記述することを推奨します。これにより、テストの意図が明確になり、チーム内のコミュニケーションが円滑になることが期待されます。
+    ```typescript
+    // 例
+    describe('レッスン一覧表示機能', () => {
+      it('データ取得成功時、レッスン情報が正しく表示されること', () => {
+        // ... test code ...
+      });
+
+      it('データ取得失敗時、エラーメッセージが表示されること', () => {
+        // ... test code ...
+      });
+    });
+    ```
+  - ただし、エラーメッセージの期待値など、コード内で扱う文字列リテラルについては、対象システムの言語仕様（日本語または英語）に合わせます。
 
 ## Jest設定ルール
 
