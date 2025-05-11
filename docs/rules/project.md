@@ -40,7 +40,7 @@ npm test
 npx jest
 ```
 
-- テストは `src/**/__tests__/*.test.tsx` などに配置してください。
+- テストコードは `src/tests` ディレクトリ内に、元のソースコードのディレクトリ構造を反映する形で配置してください。(例: `src/components/Button.tsx` のテストは `src/tests/components/Button.test.tsx` に配置)
 - Jest + React Testing Library でユニットテストが実行されます。
 
 ## テスト運用ルール
@@ -179,7 +179,7 @@ AI駆動/
 │   │   ├── components/       # UIコンポーネント
 │   │   ├── lib/              # ライブラリ・サービス層
 │   │   ├── types/            # 型定義
-│   │   └── ...               
+│   │   └── tests/            # テストコード（本体構造を反映）
 │   ├── public/               # 静的ファイル（画像・アイコン等）
 │   ├── node_modules/         # 依存パッケージ
 │   ├── .next/                # Next.jsビルド成果物
@@ -203,15 +203,14 @@ AI駆動/
 │   │   └── images/
 │   ├── 03_詳細設計/          # 詳細設計ドキュメント
 │   │   ├── 設計概要.md
-│   │   ├── app/
-│   │   ├── components/
-│   │   ├── lib/
-│   │   ├── tests/
-│   │   └── types/
+│   │   └── src/              # 詳細設計ドキュメントもsrc構造を反映
+│   │       ├── app/
+│   │       ├── components/
+│   │       ├── lib/
+│   │       ├── tests/      # テスト設計ドキュメント
+│   │       └── types/
 │   └── 開発タスクチェックリスト_最終デモ版.md # 実装タスク一覧
 │
 ├── README.md                 # プロジェクト概要・セットアップ手順
 └── ...                       # その他（必要に応じて追加）
 ```
-
-
